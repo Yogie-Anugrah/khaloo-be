@@ -62,9 +62,9 @@ app.get("/product/:id/images", async (req, res) => {
 });
 
 // add route to get product's id to use on generating Static Params
-app.get("/products-id", async (req, res) => {
+app.get("/products-metadata", async (req, res) => {
     try {
-        const results = await pool.query("SELECT prod_id FROM prod_tbl");
+        const results = await pool.query("SELECT prod_id, prod_name FROM prod_tbl");
         res.send(results.rows);
     } catch (err) {
         console.error(err);
