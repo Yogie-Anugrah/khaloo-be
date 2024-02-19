@@ -4,7 +4,7 @@ import express from "express";
 import pool from "./db/db";
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 app.use(cookieParser());
@@ -41,7 +41,7 @@ app.get("/product-list", async (req, res) => {
 app.get("/product/:id", async (req, res) => {
     try {
         const { id } = req.params; 
-        const results = await pool.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc FROM prod_tbl WHERE prod_id = $1", [id]);
+        const results = await pool.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
         res.send(results.rows[0]);
     } catch (err) {
         console.error(err);
