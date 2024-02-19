@@ -17,7 +17,7 @@ const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const db_1 = __importDefault(require("./db/db"));
 const app = (0, express_1.default)();
-const port = 3000;
+const port = 3001;
 app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
@@ -51,7 +51,7 @@ app.get("/product-list", (req, res) => __awaiter(void 0, void 0, void 0, functio
 app.get("/product/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const results = yield db_1.default.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc FROM prod_tbl WHERE prod_id = $1", [id]);
+        const results = yield db_1.default.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
         res.send(results.rows[0]);
     }
     catch (err) {
