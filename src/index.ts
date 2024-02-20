@@ -1,7 +1,12 @@
+// app.ts
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import pool from "./db/db";
+import { errorMiddleware } from "./middleware/errorMiddleware";
+import eventRoutes from "./routes/eventRoutes";
+import locationRoutes from "./routes/locationRoutes";
+import productRoutes from "./routes/productRoutes";
 
 const app = express();
 const port = 3001;
@@ -11,11 +16,11 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 app.get("/", (req, res) => {
     res.send("Hello, world!");
 });
 
-// add route to check db is alive
 app.get("/db", async (req, res) => {
     try {
         const result = await pool.query("SELECT NOW()");
@@ -26,64 +31,12 @@ app.get("/db", async (req, res) => {
     }
 });
 
-// add route to get all products return id, name, image, price, exist, flag
-app.get("/product-list", async (req, res) => {
-    try {
-        const results = await pool.query("SELECT prod_id, prod_name, prod_exist, prod_main_img, prod_price, prod_flag FROM prod_tbl");
-        res.send(results.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
-    }
-});
+app.use("/products", productRoutes);
+app.use("/events", eventRoutes);
+app.use("/locations", locationRoutes);
 
-// add route to get product by id
-app.get("/product/:id", async (req, res) => {
-    try {
-        const { id } = req.params; 
-        const results = await pool.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
-        res.send(results.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
-    }
-});
-
-// add route to get product images by id
-app.get("/product/:id/images", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const results = await pool.query("SELECT * FROM product_pict_id WHERE prod_id = $1", [id]);
-        res.send(results.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
-    }
-});
-
-// add route to get product's id to use on generating Static Params
-app.get("/products-id", async (req, res) => {
-    try {
-        const results = await pool.query("SELECT prod_id FROM prod_tbl");
-        res.send(results.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
-    }
-});
-
-// add route to get product's id to use on generating metadata
-app.get("/product-metadata/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const results = await pool.query("SELECT prod_name FROM prod_tbl WHERE prod_id = $1", [id]);
-        res.send(results.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send(err);
-    }
-});
+app.use(errorMiddleware);
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
