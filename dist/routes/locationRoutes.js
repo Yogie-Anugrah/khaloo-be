@@ -29,6 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const locationController = __importStar(require("../controllers/locationController"));
 const router = express_1.default.Router();
-router.get("/locations", locationController.getAllLocations);
-// router.post("/add-dummy-locations", locationController.addDummyLocations);
+// Fetch data location to use on find-us page
+router.get("/", locationController.getLocation);
 exports.default = router;

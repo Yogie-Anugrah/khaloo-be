@@ -5,10 +5,15 @@ import * as productController from "../controllers/productController";
 
 const router = express.Router();
 
-router.get("/product-list", productController.getProductList);
-router.get("/product/:id", productController.getProductById);
-router.get("/product/:id/images", productController.getProductImagesById);
+// Fetch data product-list to use on product page
+router.get("/list", productController.getProductList);
+
+// Fetch data product information to use on product detail page
+router.get("/:id", productController.getProductById);
+
+// Fetch metadata information to use on product detail page as SSG
+router.get("/:id/images", productController.getProductImagesById);
 router.get("/ids", productController.getProductsId);
-router.get("/product-metadata/:id", productController.getProductMetadataById);
+router.get("/metadata/:id", productController.getProductMetadataById);
 
 export default router;

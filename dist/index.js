@@ -27,6 +27,7 @@ app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+app.use(errorMiddleware_1.errorMiddleware);
 app.get("/", (req, res) => {
     res.send("Hello, world!");
 });
@@ -40,10 +41,12 @@ app.get("/db", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).send(err);
     }
 }));
+// All routes products table
 app.use("/products", productRoutes_1.default);
+// All routes events table
 app.use("/events", eventRoutes_1.default);
+// All routes location table
 app.use("/locations", locationRoutes_1.default);
-app.use(errorMiddleware_1.errorMiddleware);
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -3,7 +3,7 @@ import * as locationController from "../controllers/locationController";
 
 const router = express.Router();
 
-router.get("/locations", locationController.getAllLocations);
-// router.post("/add-dummy-locations", locationController.addDummyLocations);
+// Fetch data location to use on find-us page
+router.get("/", locationController.getLocation);
 
 export default router;

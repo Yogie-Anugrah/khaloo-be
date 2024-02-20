@@ -15,7 +15,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(errorMiddleware);
 
 app.get("/", (req, res) => {
     res.send("Hello, world!");
@@ -31,11 +31,14 @@ app.get("/db", async (req, res) => {
     }
 });
 
+// All routes products table
 app.use("/products", productRoutes);
-app.use("/events", eventRoutes);
-app.use("/locations", locationRoutes);
 
-app.use(errorMiddleware);
+// All routes events table
+app.use("/events", eventRoutes);
+
+// All routes location table
+app.use("/locations", locationRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

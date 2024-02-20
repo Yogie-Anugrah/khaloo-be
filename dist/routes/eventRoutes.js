@@ -29,5 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const eventController = __importStar(require("../controllers/eventController"));
 const router = express_1.default.Router();
-router.get("/events", eventController.getAllEvents);
+// Fetch data event to use on find-us page
+router.get("/", eventController.getEvents);
 exports.default = router;
