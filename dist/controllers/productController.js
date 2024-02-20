@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductMetadataById = exports.getProductsId = exports.getProductImagesById = exports.getProductById = exports.getProductList = void 0;
+exports.getProductMetadataById = exports.getProductIds = exports.getProductImagesById = exports.getProductById = exports.getProductList = void 0;
 const db_1 = __importDefault(require("../db/db"));
 // Fetch all products with projection needed on products page
 const getProductList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,7 +51,7 @@ const getProductImagesById = (req, res, next) => __awaiter(void 0, void 0, void 
 });
 exports.getProductImagesById = getProductImagesById;
 // Get all product IDs to generateStaticParams SSG product detail page
-const getProductsId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getProductIds = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const results = yield db_1.default.query("SELECT prod_id FROM prod_tbl");
         res.send(results.rows);
@@ -60,7 +60,7 @@ const getProductsId = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         next(err);
     }
 });
-exports.getProductsId = getProductsId;
+exports.getProductIds = getProductIds;
 // Get product metadata by ID to generate dyncamic head title detail page product
 const getProductMetadataById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -36,6 +36,6 @@ router.get("/list", productController.getProductList);
 router.get("/:id", productController.getProductById);
 // Fetch metadata information to use on product detail page as SSG
 router.get("/:id/images", productController.getProductImagesById);
-router.get("/ids", productController.getProductsId);
+router.get("/list/id", productController.getProductIds);
 router.get("/metadata/:id", productController.getProductMetadataById);
 exports.default = router;

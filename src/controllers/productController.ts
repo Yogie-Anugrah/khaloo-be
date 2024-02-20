@@ -36,7 +36,7 @@ export const getProductImagesById: RequestHandler = async (req, res, next) => {
 };
 
 // Get all product IDs to generateStaticParams SSG product detail page
-export const getProductsId: RequestHandler = async (req, res, next) => {
+export const getProductIds: RequestHandler = async (req, res, next) => {
     try {
         const results = await pool.query("SELECT prod_id FROM prod_tbl");
         res.send(results.rows);
