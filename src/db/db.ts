@@ -7,7 +7,6 @@ const pool = new Pool({
     host: "ep-delicate-bread-a1rmmtuu-pooler.ap-southeast-1.aws.neon.tech",
     port: 5432, // default PostgreSQL port
     database: "verceldb",
- 
 });
 
 export default pool;
