@@ -9,6 +9,7 @@ const pool = new pg_1.Pool({
     port: 5432, // default PostgreSQL port
     database: "verceldb",
     ssl: {
+        // to do : change this to true when in production
         rejectUnauthorized: false
     }
 });

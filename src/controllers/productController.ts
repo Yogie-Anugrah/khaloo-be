@@ -9,7 +9,7 @@ export const getProductList: RequestHandler = async (req, res, next) => {
         const client = await pool.connect();
         const results = await client.query("SELECT prod_id, prod_name, prod_exist, prod_main_img, prod_price, prod_flag FROM prod_tbl");
         client.release();
-        res.send(results.rows);
+        res.json(results.rows);
     } catch (err) {
         next(err);
     }
@@ -22,7 +22,7 @@ export const getProductById: RequestHandler = async (req, res, next) => {
         const client = await pool.connect();
         const results = await client.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
         client.release();
-        res.send(results.rows[0]);
+        res.json(results.rows[0]);
     } catch (err) {
         next(err);
     }
@@ -35,7 +35,7 @@ export const getProductImagesById: RequestHandler = async (req, res, next) => {
         const client = await pool.connect();
         const results = await client.query("SELECT * FROM product_pict_id WHERE prod_id = $1", [id]);
         client.release();
-        res.send(results.rows);
+        res.json(results.rows);
     } catch (err) {
         next(err);
     }
@@ -47,7 +47,7 @@ export const getProductIds: RequestHandler = async (req, res, next) => {
         const client = await pool.connect();
         const results = await client.query("SELECT prod_id FROM prod_tbl");
         client.release();
-        res.send(results.rows);
+        res.json(results.rows);
     } catch (err) {
         next(err);
     }
@@ -60,7 +60,7 @@ export const getProductMetadataById: RequestHandler = async (req, res, next) => 
         const client = await pool.connect();
         const results = await client.query("SELECT prod_name FROM prod_tbl WHERE prod_id = $1", [id]);
         client.release();
-        res.send(results.rows[0]);
+        res.json(results.rows[0]);
     } catch (err) {
         next(err);
     }
