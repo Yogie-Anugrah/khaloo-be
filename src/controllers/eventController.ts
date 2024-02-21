@@ -39,6 +39,7 @@ export const getEvents: RequestHandler = async (req, res, next) => {
         }
         else{
             const resultFormatting = results.rows.map((item) => ({
+                type:"event",
                 name: item.event_name,
                 startDate: item.event_start_date,
                 endDate: item.event_end_date,

@@ -42,6 +42,7 @@ export const getLocation: RequestHandler = async (req, res, next) => {
             res.send([]);
         }else{
             const resultFormatting = result.rows.map((item) => ({
+                type:"location",
                 name: item.store_name,
                 address: item.store_address,
                 imageUrl: item.store_image,

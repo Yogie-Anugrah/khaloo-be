@@ -52,6 +52,7 @@ const getEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         }
         else {
             const resultFormatting = results.rows.map((item) => ({
+                type: "event",
                 name: item.event_name,
                 startDate: item.event_start_date,
                 endDate: item.event_end_date,

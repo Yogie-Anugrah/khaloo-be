@@ -51,6 +51,7 @@ const getLocation = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         }
         else {
             const resultFormatting = result.rows.map((item) => ({
+                type: "location",
                 name: item.store_name,
                 address: item.store_address,
                 imageUrl: item.store_image,
