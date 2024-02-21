@@ -17,8 +17,10 @@ const db_1 = __importDefault(require("../db/db"));
 // Fetch all events without any projection
 const getAllEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield db_1.default.query("SELECT * FROM event_tbl");
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT * FROM event_tbl");
         res.send(results.rows);
+        client.release();
     }
     catch (err) {
         next(err);
@@ -28,8 +30,39 @@ exports.getAllEvents = getAllEvents;
 // Get all events with projection needed on find-us-page ordered by start_date and only if status = upcoming
 const getEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield db_1.default.query("SELECT id, event_name, event_start_date, event_end_date, event_time, event_location, event_banner FROM event_tbl WHERE event_status='Upcoming' ORDER BY event_start_date");
-        res.send(results.rows);
+        const client = yield db_1.default.connect();
+        const results = yield client.query(`
+            SELECT 
+                event_name, 
+                event_start_date, 
+                event_end_date, 
+                event_time, 
+                event_location, 
+                event_banner, 
+                event_image 
+            FROM 
+                event_tbl 
+            WHERE 
+                event_status='Upcoming' 
+            ORDER BY 
+                event_start_date
+        `);
+        if (results.rows.length == 0) {
+            res.send([]);
+        }
+        else {
+            const resultFormatting = results.rows.map((item) => ({
+                name: item.event_name,
+                startDate: item.event_start_date,
+                endDate: item.event_end_date,
+                time: item.event_time,
+                address: item.event_location,
+                bannerUrl: item.event_banner,
+                imageUrl: item.event_image
+            }));
+            res.send(resultFormatting);
+        }
+        client.release();
     }
     catch (err) {
         next(err);
