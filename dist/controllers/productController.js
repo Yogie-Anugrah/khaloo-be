@@ -18,7 +18,9 @@ const db_1 = __importDefault(require("../db/db"));
 // Fetch all products with projection needed on products page
 const getProductList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield db_1.default.query("SELECT prod_id, prod_name, prod_exist, prod_main_img, prod_price, prod_flag FROM prod_tbl");
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT prod_id, prod_name, prod_exist, prod_main_img, prod_price, prod_flag FROM prod_tbl");
+        client.release();
         res.send(results.rows);
     }
     catch (err) {
@@ -30,7 +32,9 @@ exports.getProductList = getProductList;
 const getProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const results = yield db_1.default.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT prod_id, prod_price, prod_name, prod_main_img, prod_desc, prod_ingredients, prod_how_to_use, prod_review FROM prod_tbl WHERE prod_id = $1", [id]);
+        client.release();
         res.send(results.rows[0]);
     }
     catch (err) {
@@ -42,7 +46,9 @@ exports.getProductById = getProductById;
 const getProductImagesById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const results = yield db_1.default.query("SELECT * FROM product_pict_id WHERE prod_id = $1", [id]);
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT * FROM product_pict_id WHERE prod_id = $1", [id]);
+        client.release();
         res.send(results.rows);
     }
     catch (err) {
@@ -53,7 +59,9 @@ exports.getProductImagesById = getProductImagesById;
 // Get all product IDs to generateStaticParams SSG product detail page
 const getProductIds = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield db_1.default.query("SELECT prod_id FROM prod_tbl");
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT prod_id FROM prod_tbl");
+        client.release();
         res.send(results.rows);
     }
     catch (err) {
@@ -65,7 +73,9 @@ exports.getProductIds = getProductIds;
 const getProductMetadataById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const results = yield db_1.default.query("SELECT prod_name FROM prod_tbl WHERE prod_id = $1", [id]);
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT prod_name FROM prod_tbl WHERE prod_id = $1", [id]);
+        client.release();
         res.send(results.rows[0]);
     }
     catch (err) {
