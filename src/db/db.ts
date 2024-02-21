@@ -2,11 +2,11 @@ import { Pool } from "pg";
 
 // TODO : Save the credential in Environment Variable
 const pool = new Pool({
-    user: "zfggiaiv",
-    password: "Z-vyv5W0F1jc7ESiUbFFirOtFWF9MdVL",
-    host: "rosie.db.elephantsql.com",
+    user: "default",
+    password: "NKSx92feAJlh",
+    host: "ep-delicate-bread-a1rmmtuu-pooler.ap-southeast-1.aws.neon.tech",
     port: 5432, // default PostgreSQL port
-    database: "zfggiaiv",
+    database: "verceldb",
 });
 
 export default pool;
