@@ -10,6 +10,7 @@ import productRoutes from "./routes/productRoutes";
 import homeRoutes from "./routes/homeRoutes";
 import articleRoutes from "./routes/articleRoutes";
 import partnershipRoutes from "./routes/partnershipRoutes";
+import youtubeRoutes from "./routes/youtubeRoutes";
 
 const app = express();
 const port = 3001;
@@ -45,6 +46,7 @@ app.use("/locations", locationRoutes);
 app.use("/home", homeRoutes);
 app.use("/articles", articleRoutes);
 app.use("/partnerships", partnershipRoutes);
+app.use("/youtube", youtubeRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
