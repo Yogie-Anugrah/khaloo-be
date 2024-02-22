@@ -7,6 +7,9 @@ import { errorMiddleware } from "./middleware/errorMiddleware";
 import eventRoutes from "./routes/eventRoutes";
 import locationRoutes from "./routes/locationRoutes";
 import productRoutes from "./routes/productRoutes";
+import homeRoutes from "./routes/homeRoutes";
+import articleRoutes from "./routes/articleRoutes";
+import partnershipRoutes from "./routes/partnershipRoutes";
 
 const app = express();
 const port = 3001;
@@ -39,6 +42,9 @@ app.use("/events", eventRoutes);
 
 // All routes location table
 app.use("/locations", locationRoutes);
+app.use("/home", homeRoutes);
+app.use("/articles", articleRoutes);
+app.use("/partnerships", partnershipRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
