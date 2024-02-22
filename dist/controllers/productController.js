@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductMetadataById = exports.getProductIds = exports.getProductImagesById = exports.getProductById = exports.getProductList = void 0;
+exports.getProductMetadataById = exports.getProductIds = exports.getProductImagesById = exports.getProductById = exports.getHighlightProduct = exports.getProductList = void 0;
 const db_1 = __importDefault(require("../db/db"));
 // Fetch all products with projection needed on products page
 const getProductList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,6 +28,19 @@ const getProductList = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.getProductList = getProductList;
+// Get Highlight Product
+const getHighlightProduct = (_, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const client = yield db_1.default.connect();
+        const results = yield client.query("SELECT * FROM prod_tbl WHERE highlighted = true");
+        client.release();
+        res.json(results.rows);
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getHighlightProduct = getHighlightProduct;
 // Get product by ID with detailed information needed on detail product page
 const getProductById = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
