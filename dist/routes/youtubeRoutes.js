@@ -27,10 +27,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const locationController = __importStar(require("../controllers/locationController"));
+const youtubeController = __importStar(require("../controllers/youtubeController"));
 const router = express_1.default.Router();
-// Fetch data location to use on find-us page
-router.get("/", locationController.getLocation);
-// Fetch data location for global search
-router.get("/search", locationController.getLocationsGlobalSearch);
+router.get("/videos", youtubeController.getAllYoutubeVideos);
+router.post("/videos", youtubeController.createYoutubeVideo);
+router.get("/videos/top", youtubeController.getTopYoutubeVideos);
+router.get("/videos/:id", youtubeController.getYoutubeVideoById);
 exports.default = router;

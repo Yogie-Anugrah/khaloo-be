@@ -17,6 +17,18 @@ export const getProductList: RequestHandler = async (req, res, next) => {
     }
 };
 
+// Get Highlight Product
+export const getHighlightProduct: RequestHandler = async (_, res, next) => {
+    try {
+        const client = await pool.connect();
+        const results = await client.query("SELECT * FROM prod_tbl WHERE highlighted = true");
+        client.release();
+        res.json(results.rows);
+    } catch (err) {
+        next(err);
+    }
+};
+
 // Get product by ID with detailed information needed on detail product page
 export const getProductById: RequestHandler = async (req, res, next) => {
     try {

@@ -21,6 +21,10 @@ const errorMiddleware_1 = require("./middleware/errorMiddleware");
 const eventRoutes_1 = __importDefault(require("./routes/eventRoutes"));
 const locationRoutes_1 = __importDefault(require("./routes/locationRoutes"));
 const productRoutes_1 = __importDefault(require("./routes/productRoutes"));
+const homeRoutes_1 = __importDefault(require("./routes/homeRoutes"));
+const articleRoutes_1 = __importDefault(require("./routes/articleRoutes"));
+const partnershipRoutes_1 = __importDefault(require("./routes/partnershipRoutes"));
+const youtubeRoutes_1 = __importDefault(require("./routes/youtubeRoutes"));
 const app = (0, express_1.default)();
 const port = 3001;
 app.use((0, cors_1.default)());
@@ -47,6 +51,10 @@ app.use("/products", productRoutes_1.default);
 app.use("/events", eventRoutes_1.default);
 // All routes location table
 app.use("/locations", locationRoutes_1.default);
+app.use("/home", homeRoutes_1.default);
+app.use("/articles", articleRoutes_1.default);
+app.use("/partnerships", partnershipRoutes_1.default);
+app.use("/youtube", youtubeRoutes_1.default);
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

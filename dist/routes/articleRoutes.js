@@ -27,10 +27,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const locationController = __importStar(require("../controllers/locationController"));
+const articleController = __importStar(require("../controllers/articlesController"));
 const router = express_1.default.Router();
-// Fetch data location to use on find-us page
-router.get("/", locationController.getLocation);
-// Fetch data location for global search
-router.get("/search", locationController.getLocationsGlobalSearch);
+router.get("/list", articleController.getAllArticles);
+router.get("/top", articleController.getTopArticles);
+router.get("/:id", articleController.getArticleById);
+router.post("/", articleController.createArticle);
+router.put("/:id", articleController.updateArticleById);
 exports.default = router;
