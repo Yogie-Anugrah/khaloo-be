@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import pool from "../db/db";
 
 // Fetch all events without any projection
-export const getAllEvents:RequestHandler = async (req, res, next) => {
+export const getAllEvents: RequestHandler = async (req, res, next) => {
     try {
         const client = await pool.connect();
         const results = await client.query("SELECT * FROM event_tbl");
@@ -34,23 +34,22 @@ export const getEvents: RequestHandler = async (req, res, next) => {
                 event_start_date
         `);
 
-        if (results.rows.length==0) {
+        if (results.rows.length == 0) {
             res.send([]);
-        }
-        else{
+        } else {
             const resultFormatting = results.rows.map((item) => ({
-                type:"event",
+                type: "event",
                 name: item.event_name,
                 startDate: item.event_start_date,
                 endDate: item.event_end_date,
                 time: item.event_time,
                 address: item.event_location,
                 bannerUrl: item.event_banner,
-                imageUrl: item.event_image
+                imageUrl: item.event_image,
             }));
             res.send(resultFormatting);
         }
-        
+
         client.release();
     } catch (err) {
         next(err);

@@ -42,4 +42,5 @@ router.get("/:id/images", productController.getProductImagesById);
 router.get("/list/id", productController.getProductIds);
 // Fetch product metadata by id
 router.get("/metadata/:id", productController.getProductMetadataById);
+router.get("/search", productController.getProductsGlobalSearch);
 exports.default = router;

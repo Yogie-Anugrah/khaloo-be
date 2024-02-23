@@ -59,7 +59,7 @@ const getEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function
                 time: item.event_time,
                 address: item.event_location,
                 bannerUrl: item.event_banner,
-                imageUrl: item.event_image
+                imageUrl: item.event_image,
             }));
             res.send(resultFormatting);
         }

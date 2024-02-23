@@ -31,4 +31,6 @@ const locationController = __importStar(require("../controllers/locationControll
 const router = express_1.default.Router();
 // Fetch data location to use on find-us page
 router.get("/", locationController.getLocation);
+// Fetch data location for global search
+router.get("/search", locationController.getLocationsGlobalSearch);
 exports.default = router;

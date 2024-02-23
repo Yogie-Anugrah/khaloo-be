@@ -23,4 +23,6 @@ router.get("/list/id", productController.getProductIds);
 // Fetch product metadata by id
 router.get("/metadata/:id", productController.getProductMetadataById);
 
+router.get("/search", productController.getProductsGlobalSearch);
+
 export default router;
