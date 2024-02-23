@@ -55,6 +55,7 @@ app.use("/home", homeRoutes_1.default);
 app.use("/articles", articleRoutes_1.default);
 app.use("/partnerships", partnershipRoutes_1.default);
 app.use("/youtube", youtubeRoutes_1.default);
+app.use("/articles", articleRoutes_1.default);
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLocation = exports.getAllLocations = void 0;
+exports.getLocationsGlobalSearch = exports.getLocation = exports.getAllLocations = void 0;
 const db_1 = __importDefault(require("../db/db"));
 // Fetch all locations without any projection
 const getAllLocations = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,7 +55,7 @@ const getLocation = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 name: item.store_name,
                 address: item.store_address,
                 imageUrl: item.store_image,
-                mapsUrl: item.store_maps_url
+                mapsUrl: item.store_maps_url,
             }));
             res.send(resultFormatting);
         }
@@ -66,3 +66,34 @@ const getLocation = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getLocation = getLocation;
+const getLocationsGlobalSearch = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { query } = req.query;
+        const client = yield db_1.default.connect();
+        const results = yield client.query(`
+      SELECT 
+        store_name, 
+        store_address, 
+        store_image
+      FROM 
+        location_tbl 
+      WHERE 
+        store_name ILIKE $1
+        OR store_address ILIKE $1
+        AND store_status = true
+      ORDER BY 
+        store_name
+    `, [`%${query}%`]);
+        const resultFormatting = results.rows.map((item) => ({
+            title: item.store_name,
+            desc: item.store_address,
+            imageUrl: item.store_image,
+        }));
+        res.send(resultFormatting);
+        client.release();
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getLocationsGlobalSearch = getLocationsGlobalSearch;

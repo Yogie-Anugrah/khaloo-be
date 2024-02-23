@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductMetadataById = exports.getProductIds = exports.getProductImagesById = exports.getProductById = exports.getHighlightProduct = exports.getProductList = void 0;
+exports.getProductsGlobalSearch = exports.getProductMetadataById = exports.getProductIds = exports.getProductImagesById = exports.getProductById = exports.getHighlightProduct = exports.getProductList = void 0;
 const db_1 = __importDefault(require("../db/db"));
 // Fetch all products with projection needed on products page
 const getProductList = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -96,3 +96,32 @@ const getProductMetadataById = (req, res, next) => __awaiter(void 0, void 0, voi
     }
 });
 exports.getProductMetadataById = getProductMetadataById;
+const getProductsGlobalSearch = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { query } = req.query;
+        const client = yield db_1.default.connect();
+        const results = yield client.query(`
+      SELECT 
+        prod_name, 
+        prod_price, 
+        prod_main_img
+      FROM 
+        prod_tbl
+      WHERE 
+        prod_name ILIKE $1
+      ORDER BY 
+        prod_name
+    `, [`%${query}%`]);
+        const resultFormatting = results.rows.map((item) => ({
+            title: item.prod_name,
+            desc: item.prod_price,
+            imageUrl: item.prod_main_img,
+        }));
+        res.send(resultFormatting);
+        client.release();
+    }
+    catch (err) {
+        next(err);
+    }
+});
+exports.getProductsGlobalSearch = getProductsGlobalSearch;
